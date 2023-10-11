@@ -27,7 +27,7 @@ The `onepubkey` is primarily intended as a payment reception tool. This means th
 
 To run the worker client:
 
-[Instructions for running worker client will be provided here]
+A rust worker-net client is under development.
 
 ## Contribute
 
