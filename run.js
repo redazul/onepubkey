@@ -3,7 +3,7 @@ const bs58 = require('bs58');
 const fs = require('fs');
 const { Keypair, PublicKey, Connection, Transaction, SystemProgram, TransactionInstruction } = require('@solana/web3.js');
 
-let sessionRpc = "https://patient-fragrant-card.solana-devnet.quiknode.pro/3e373e17b6007e1d1eddf7f1d394df2d7a81b67e/"
+let sessionRpc = ""
 const connection = new Connection(sessionRpc);
 // Fetch recent blockhash
 
@@ -101,7 +101,7 @@ async function callProgram2(tree,feePayerKeypair) {
               { pubkey: new PublicKey(feePayerKeypair.publicKey), isSigner: true, isWritable: true }, // Fee payer
               { pubkey: new PublicKey(pda), isSigner: false, isWritable: true }, // PDA
               { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },// system program
-              { pubkey: new PublicKey("9z8eyT5meZsQK79Pm2rmqBQcQKfj6tWJfRVbjQczyKcK"), isSigner: false, isWritable: true },// RPC fee collection
+              { pubkey: new PublicKey("D1Wr9oy2sLVB7Vb6fMU94F3B3N5nJJzr5QqiP2ymhXTr"), isSigner: false, isWritable: true },// RPC fee collection
               { pubkey: new PublicKey(sessionID), isSigner: false, isWritable: false }, // Session ID
             ];
           
@@ -146,7 +146,7 @@ async function callProgram2(tree,feePayerKeypair) {
             // // Open the transaction in Solana explorer in a new tab
             // window.open(`https://explorer.solana.com/tx/${transactionId}?cluster=devnet`, '_blank');
           
-            console.log(`https://explorer.solana.com/tx/${transactionId}?cluster=devnet`)
+            console.log(`https://explorer.solana.com/tx/${transactionId}`)
           
         
           
@@ -162,14 +162,14 @@ async function callProgram2(tree,feePayerKeypair) {
 async function main(pubkey) {
     console.log('onepubkey worker crank');
 
-    const url = 'https://patient-fragrant-card.solana-devnet.quiknode.pro/3e373e17b6007e1d1eddf7f1d394df2d7a81b67e/';
+    const url = 'https://winter-divine-crater.solana-mainnet.quiknode.pro/<your-api-here>';
 
     const data = {
         jsonrpc: '2.0',
         id: 1,
         method: 'getProgramAccounts',
         params: [
-            'EzrUhYCdivcHqMcDCKzc2jegFJmi47rFfCg7fHnN83iU'
+            'mempnhZcS6Ugdf6A9rnzcmiBfnUHCnLzZsB1oL4U1nY'
         ]
     };
 
