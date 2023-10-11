@@ -35,7 +35,7 @@ Contributions to improve `onepubkey` are always welcome. Whether it's enhancing 
 
 ## License
 
-[MIT License](LICENSE)
+[Apache License](LICENSE)
 
 ## Support
 
