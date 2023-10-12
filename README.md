@@ -41,5 +41,4 @@ Contributions to improve `onepubkey` are always welcome. Whether it's enhancing 
 
 For any questions or feedback, please [open an issue](https://github.com/cyon-labs/onepubkey/issues) on GitHub.
 
-Please not this program is under active develpment, user assumes all risk.
-Given it's a hackathon project it has not been security firm audited yet.
+Please note this program is under active develpment...user assumes all risk.
