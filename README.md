@@ -1,4 +1,4 @@
-# onepubkey-mainnet-beta
+# onepubkey-mainnet-beta [Note that this program has not been thouroughly tested - user assums responabilaties]
 
 `onepubkey` is a tool designed to merge any number of Solana pubkeys into one. Simply input any number of pubkeys using a csv file at [https://onepubkey.com](https://onepubkey.com), and they'll be merged into a single pubkey.
 
