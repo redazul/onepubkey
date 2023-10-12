@@ -159,34 +159,45 @@ async function callProgram2(tree,feePayerKeypair) {
 
 }
 
+async function handleIpfs(ipfsUrl) {
+    const last59BytesAsString = ipfsUrl;
+    const jsonUrl = `https://${last59BytesAsString}.ipfs.nftstorage.link/`;
+
+    try {
+        const jsonResponse = await axios.get(jsonUrl);
+        console.log("***********Found IPFS Tree****************\n");
+        console.log('JSON response:', jsonResponse.data);
+
+        const tree = jsonResponse.data;
+        console.log("Cranking if Profitable");
+        await callProgram2(tree, keypair);
+    } catch (error) {
+        console.error("Error fetching IPFS data:", error);
+    }
+}
+
 async function main(pubkey) {
     console.log('onepubkey worker crank');
 
-    const url = 'https://winter-divine-crater.solana-mainnet.quiknode.pro/<your-api-here>';
+    const url = '';
 
     const data = {
         jsonrpc: '2.0',
         id: 1,
         method: 'getProgramAccounts',
-        params: [
-            'mempnhZcS6Ugdf6A9rnzcmiBfnUHCnLzZsB1oL4U1nY'
-        ]
+        params: ['mempnhZcS6Ugdf6A9rnzcmiBfnUHCnLzZsB1oL4U1nY']
     };
 
     try {
         const response = await axios.post(url, data, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: { 'Content-Type': 'application/json' }
         });
 
         const targetPubKey = pubkey;
         const account = response.data.result.find(item => item.pubkey === targetPubKey);
 
         if (account) {
-
             console.log(`Found account with pubkey: ${targetPubKey}`);
-            console.log(account);
 
             const accountData = account.account.data;
             const decodedData = bs58.decode(accountData);
@@ -196,15 +207,14 @@ async function main(pubkey) {
 
             const jsonUrl = `https://${last59BytesAsString}.ipfs.nftstorage.link/`;
 
-            // Fetch the JSON file
             const jsonResponse = await axios.get(jsonUrl);
-            console.log("***********Found IPFS Tree****************\n")
+            console.log("***********Found IPFS Tree****************\n");
             console.log('JSON response:', jsonResponse.data);
 
-            var tree = jsonResponse.data;
+            const tree = jsonResponse.data;
 
             console.log("Cranking if Profitable");
-            await callProgram2(tree,keypair);
+            await callProgram2(tree, keypair);
         } else {
             console.log(`No account found with pubkey: ${targetPubKey}`);
         }
@@ -213,17 +223,29 @@ async function main(pubkey) {
     }
 }
 
-// Manually parse the command line arguments for the pubkey
-let pubkey = '';
+let treePubkey = '';
+let ipfsUrl = '';
+
 for (let i = 2; i < process.argv.length; i++) {
     if (process.argv[i].startsWith('--tree=')) {
-        pubkey = process.argv[i].split('=')[1];
-        break;
+        treePubkey = process.argv[i].split('=')[1];
+    } else if (process.argv[i].startsWith('--ipfs=')) {
+        ipfsUrl = process.argv[i].split('=')[1];
     }
 }
 
-if (pubkey) {
-    main(pubkey);
+if (treePubkey && ipfsUrl) {
+    console.log('Please provide only one argument, either --tree or --ipfs.');
+    return;
+}
+
+if (ipfsUrl) {
+    handleIpfs(ipfsUrl);
+    return;
+}
+
+if (treePubkey) {
+    main(treePubkey);
 } else {
-    console.log('Please provide a pubkey using the --tree=<base58address> format.');
+    console.log('Please provide a tree pubkey using the --tree=<base58address> format. or --ipfs<CID> format ');
 }
